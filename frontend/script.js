@@ -40,6 +40,21 @@ const deleteTask = async (taskId) => {
   }
 }
 
+// Deleta a tarefa utilizando o metodo delete e passando o task no params
+const updateTask = async (taskId, changes) => {
+  try {
+    await fetch(`http://localhost:3000/tarefas/${taskId}`, {
+      method: 'PATCH',
+      body: JSON.stringify(changes),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+  } catch (error) {
+    console.error(error)
+  }
+}
+
 const populateTasksElements = async () => {
   // Consulta as tasks
   const tasks = await getTasks();
@@ -51,6 +66,14 @@ const populateTasksElements = async () => {
     // Cria nossos elementos e popula
     const inputCheckbox = document.createElement('input');
     inputCheckbox.type = 'checkbox';
+    inputCheckbox.checked = tasks[x].completo
+
+    inputCheckbox.addEventListener('click', async () => {
+      const novoValor = !tasks[x].completo
+      await updateTask(tasks[x].id, { completo: novoValor });
+      window.location.reload();
+    })
+
     const titleP = document.createElement('p')
     titleP.textContent = tasks[x].titulo;
 
