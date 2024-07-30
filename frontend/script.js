@@ -40,7 +40,7 @@ const deleteTask = async (taskId) => {
   }
 }
 
-// Deleta a tarefa utilizando o metodo delete e passando o task no params
+// atualizar a tarefa utilizando o metodo patch e passando a task id no params
 const updateTask = async (taskId, changes) => {
   try {
     await fetch(`http://localhost:3000/tarefas/${taskId}`, {
