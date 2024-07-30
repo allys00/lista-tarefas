@@ -55,6 +55,18 @@ app.delete("/tarefas/:tarefaId", async (request, response) => {
     response.status(500).json({ error: error.message });
   }
 });
+
+
+app.patch("/tarefas/:tarefaId", async (request, response) => {
+  try {
+    const tarefa = await Tarefa.findOne({ where: { id: request.params.tarefaId } })
+    tarefa.update(request.body);
+    tarefa.save()
+    response.status(200).json(tarefa)
+  } catch (error) {
+    response.status(500).json({ error: error.message });
+  }
+})
 // Porta da base URL
 const port = 3000;
 // Sincronizar o Banco de dados DB = Database = Banco de dados.
